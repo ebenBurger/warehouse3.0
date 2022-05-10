@@ -1,32 +1,13 @@
 <template>
-  <form @submit.prevent="handleSubmit">
-    <h3>Log In</h3>
-    <label for="email">Email:</label>
-    <input type="email" name="email" v-model="email" required>
-
-    <label for="email">Password:</label>
-    <input type="password" name="password" v-model="password" required>
-
-    <button>Log In</button>
-  </form>
+  <div>Log In</div>
 </template>
 
 <script>
-import {ref} from "vue";
-
 export default {
-  setup() {
-    const email = ref('')
-    const password = ref('')
-
-    const handleSubmit = () => {
-      console.log(email.value, password.value)
-    }
-    return {handleSubmit, email, password}
-  }
+  name: "log-in"
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 
 </style>
