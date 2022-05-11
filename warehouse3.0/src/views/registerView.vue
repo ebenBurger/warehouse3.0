@@ -1,7 +1,7 @@
 <template>
-  <div class="register">
+  <div class="login">
     <form @submit.prevent="handleSubmit">
-      <h3>Log In</h3>
+      <h3>Register</h3>
       <div>
         <div class="name">
           <label for="email">Email:</label>
@@ -13,18 +13,25 @@
           <input type="password" name="password" v-model="password" required>
         </div>
         <button type="submit">Submit</button>
+        <div v-if="error">{{error}}</div>
       </div>
     </form>
   </div>
 </template>
 
 <script>
-import {ref} from "vue/dist/vue";
+import {ref} from "vue";
+import {useStore} from "vuex";
+import {useRouter} from "vue-router";
 
 export default {
   setup() {
+    const store = useStore()
+    const router = useRouter()
+
     const email = ref('')
     const password = ref('')
+    const error = ref('')
 
     //this is the access the store
     // const store = useStore()
@@ -40,18 +47,41 @@ export default {
 
 
 
-    const handleSubmit = () => {
-      console.log(email.value, password.value)
+    const handleSubmit = async () => {
+      try {
+        await store.dispatch('', {
+          email: email.value,
+          password: password.value
+        })
+        await router.push('/home')
+      } catch (err) {
+        error.value = err.message
+      }
     }
     return {
       handleSubmit,
       email,
-      password
+      password,
+      error
     }
   }
 }
 </script>
 
 <style scoped lang="scss">
-.register {}
+.login {
+  //display: flex;
+  //justify-content: center;
+  //align-items: center;
+  position: relative;
+  width: 100vw;
+  height: 80vh;
+
+  form {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
 </style>
